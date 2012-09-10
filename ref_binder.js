@@ -1,33 +1,30 @@
-function RefBinder(){
-  this.initRefBinder();
+var RefBinder = function(target){
+  this._ref = {};
+  this.target = target;
 }
 
 module.exports = RefBinder;
 
-RefBinder.prototype.initRefBinder = function(name,obj,events){
-  this._refs = {};
+RefBinder.prototype.get = function(name,obj,events){
+  return this._ref[name];
 };
 
-RefBinder.prototype.getRef = function(name,obj,events){
-  return this._refs[name];
-};
-
-RefBinder.prototype.setRef = function(name,obj,events){
-  this.unsetRef(name);
+RefBinder.prototype.set = function(name,obj,events){
+  this.unset(name);
   for(var e_name in events){
-    obj.on( e_name, this[events[e]], this);
+    obj.on( e_name, this.target[events[e_name]], this.target);
   }
-  this._refs[name] = obj;
+  this._ref[name] = obj;
 };
 
-RefBinder.prototype.unsetRef = function(name){
+RefBinder.prototype.unset = function(name){
   if(!this._ref[name]) return;
   this._ref[name].off(null,null,this);
   delete this._ref[name];
 };
 
-RefBinder.prototype.unsetAllRefs = function(){
-  for(var name in this._refs){
-    this.unsetRef(name);
+RefBinder.prototype.unsetAll = function(){
+  for(var name in this._ref){
+    this.unset(name);
   }
 };
