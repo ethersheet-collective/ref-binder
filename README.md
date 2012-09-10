@@ -6,7 +6,7 @@ API likely to change. :)
 
 ## Example Usage
 
-''''javascript
+````javascript
 
 var RefBinder = require('ref-binder');
 
@@ -34,4 +34,4 @@ refs.unset('item1');
 refs.unsetAll();
 
 
-''''
+````
