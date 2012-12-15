@@ -12,6 +12,7 @@ define( function(require){
 
   RefBinder.prototype.set = function(name,obj,events){
     this.unset(name);
+    if(!obj) return;
     for(var e_name in events){
       obj.on( e_name, this.target[events[e_name]], this.target);
     }
