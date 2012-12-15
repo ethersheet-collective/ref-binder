@@ -34,4 +34,34 @@ refs.unset('item1');
 refs.unsetAll();
 
 
+// Example of a Backbone view using ref-binder
+
+var TodoListView = Backbone.View.extend({
+
+  initialize: function(o){
+    this.models = new RefBinder(this);
+    this.setTodos(o.todo_items);
+  },
+
+  getTodos: function(){
+    return this.models.get('todos');
+  },
+
+  setTodos: function(todo_items){
+    this.models.set('todos',todo_items,{
+     'change':  'render',
+     'fetch':  'showLoadingGraphic',
+     'sync':  'hideLoadingGraphic',
+    });
+  },
+
+  destroy: function(){
+    this.models.unsetAll();
+    this.remove();
+  }
+  
+});
+
+
+
 ````
